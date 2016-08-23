@@ -1,6 +1,8 @@
 package com.egov.recbot.json.request;
 
-public class WebhookRequestResultFulfillment {
+import com.egov.recbot.json.JsonBase;
+
+public class WebhookRequestResultFulfillment extends JsonBase {
 
   private String speech;
 

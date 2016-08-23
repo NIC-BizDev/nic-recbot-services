@@ -1,6 +1,8 @@
 package com.egov.recbot.json.request;
 
-public class WebhookRequestResultMetadata {
+import com.egov.recbot.json.JsonBase;
+
+public class WebhookRequestResultMetadata extends JsonBase {
 
   private String intentId;
   private String intentName;

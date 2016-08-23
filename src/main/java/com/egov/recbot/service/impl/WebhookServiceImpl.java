@@ -5,10 +5,14 @@ import com.egov.recbot.json.response.WebhookResponse;
 import com.egov.recbot.json.response.WebhookResponseContext;
 import com.egov.recbot.service.WebhookService;
 
+import org.apache.log4j.Logger;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class WebhookServiceImpl implements WebhookService {
+
+  private Logger logger = Logger.getLogger(this.getClass());
 
   @Override
   public WebhookResponse processWebhookRequest(WebhookRequest request) {

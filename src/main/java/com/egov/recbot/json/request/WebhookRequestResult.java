@@ -1,9 +1,11 @@
 package com.egov.recbot.json.request;
 
+import com.egov.recbot.json.JsonBase;
+
 import java.util.List;
 import java.util.Map;
 
-public class WebhookRequestResult {
+public class WebhookRequestResult extends JsonBase {
 
   private String source;
   private String resolvedQuery;

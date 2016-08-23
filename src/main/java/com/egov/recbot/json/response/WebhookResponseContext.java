@@ -1,8 +1,10 @@
 package com.egov.recbot.json.response;
 
+import com.egov.recbot.json.JsonBase;
+
 import java.util.Map;
 
-public class WebhookResponseContext {
+public class WebhookResponseContext extends JsonBase {
 
   private String name;
   private Map<String, String> parameters;

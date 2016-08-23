@@ -1,9 +1,11 @@
 package com.egov.recbot.json.response;
 
+import com.egov.recbot.json.JsonBase;
+
 import java.util.List;
 import java.util.Map;
 
-public class WebhookResponse {
+public class WebhookResponse extends JsonBase {
 
   private String speech;
   private String displayText;
