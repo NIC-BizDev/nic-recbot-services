@@ -26,7 +26,7 @@ public class GoogleMapsServiceImpl implements GoogleMapsService {
   public GoogleMapsResponse getCoordinates(String city) {
     RestTemplate restTemplate = new RestTemplate();
     HttpEntity<?> httpEntity = this.generateHttpEntityForApiRequests(null);
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(googleMapsApiUrl)
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(this.googleMapsApiUrl)
       .queryParam("address", city);
     URI uri = builder.build().toUri();
     return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, GoogleMapsResponse.class).getBody();
