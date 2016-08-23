@@ -1,10 +1,8 @@
 package com.egov.recbot.service.impl;
 
 import com.egov.recbot.json.request.WebhookRequest;
-import com.egov.recbot.json.response.GoogleMapsResponse;
 import com.egov.recbot.json.response.WebhookResponse;
 import com.egov.recbot.json.response.WebhookResponseContext;
-import com.egov.recbot.service.GoogleMapsService;
 import com.egov.recbot.service.WebhookService;
 
 import org.apache.log4j.Logger;
@@ -17,9 +15,6 @@ public class WebhookServiceImpl implements WebhookService {
 
   private Logger logger = Logger.getLogger(this.getClass());
 
-  @Autowired
-  private GoogleMapsService googleMapsService;
-
   @Override
   public WebhookResponse processWebhookRequest(WebhookRequest request) {
     WebhookResponse webhookResponse = new WebhookResponse();
@@ -27,9 +22,6 @@ public class WebhookServiceImpl implements WebhookService {
     webhookResponse.setSpeech("This is the response from the webhook!");
     webhookResponse.setDisplayText("This is the display text from the webhook!");
     webhookResponse.setSource("nic-recbot-service");
-
-    //GoogleMapsResponse googleMapsResponse = this.googleMapsService.getCoordinates("Nashville");
-    //this.logger.warn(googleMapsResponse);
 
     return webhookResponse;
   }
