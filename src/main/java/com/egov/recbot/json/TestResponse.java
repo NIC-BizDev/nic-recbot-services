@@ -1,4 +1,4 @@
-package com.egov.recbot.services;
+package com.egov.recbot.json;
 
 public class TestResponse {
 
