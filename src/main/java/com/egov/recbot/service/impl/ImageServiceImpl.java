@@ -35,8 +35,15 @@ public class ImageServiceImpl  implements ImageService {
         HttpEntity<?> httpEntity = this.generateHttpEntityForApiRequests(null);
         String params = "term="+pointOfIntrest+"&image_size=1&sort=undefined&only=Landscapes&_method=get&sdk_key=14a189d76dde321cdf2b939c124062709ff1dbd2&rpp=1";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(this.endpoint)
-                .query(params);
+                .queryParam("term", pointOfIntrest)
+                .queryParam("image_size","1")
+                .queryParam("sort","undefined")
+                .queryParam("only","Landscapes")
+                .queryParam("_method","get")
+                .queryParam("sdk_key","14a189d76dde321cdf2b939c124062709ff1dbd2")
+                .queryParam("rpp", "1");
         URI uri = builder.build().toUri();
+        System.out.println("uri is "+uri.toString());
         return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, ImageServiceResponse.class).getBody();
     }
 

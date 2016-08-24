@@ -59,7 +59,7 @@ public class WebhookServiceImpl implements WebhookService {
           recLocations
         );
 
-        /*JSONObject obj = new JSONObject();
+        JSONObject obj = new JSONObject();
         obj.put("size", ridbResponse.getRecdata().size());
         obj.put("activityName", activityName);
 
@@ -73,15 +73,18 @@ public class WebhookServiceImpl implements WebhookService {
           recObj.put("Latitude", ridbResponse.getRecdata().get(index).getLatitude().toString());
           recObj.put("Longitude", ridbResponse.getRecdata().get(index).getLongitude().toString());
 
-          ImageServiceResponse imageServiceResponse = imageService.getImageFromPOI(ridbResponse.getRecdata().get(index).getName());
+          ImageServiceResponse imageServiceResponse = imageService.getImageFromPOI("");
+          this.logger.warn("Image service is "+imageServiceResponse.getPhotosDataList().size());
+          System.out.print("Size is "+imageServiceResponse.getPhotosDataList().size());
           recObj.put("Image", imageServiceResponse.getPhotosDataList().get(0).getImage_url());
+          System.out.print("URL is "+imageServiceResponse.getPhotosDataList().get(0).getImage_url());
           recJsonLocations.add(recObj);
 
         }
 
         obj.put("Recreation List", recJsonLocations);
 
-        response.setData(obj);*/
+        response.setData(obj);
 
         response.setSpeech(speech);
         response.setDisplayText(speech);
