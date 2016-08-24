@@ -10,7 +10,6 @@ public class WebhookResponse extends JsonBase {
 
   private String speech;
   private String displayText;
-  //private List<Recommendations> data;
 
   private JSONObject data ;
 
@@ -46,6 +45,11 @@ public class WebhookResponse extends JsonBase {
   }
 
   public void setData(JSONObject data) {
+  public Map<String, Object> getData() {
+    return this.data;
+  }
+
+  public void setData(Map<String, Object> data) {
     this.data = data;
   }
 

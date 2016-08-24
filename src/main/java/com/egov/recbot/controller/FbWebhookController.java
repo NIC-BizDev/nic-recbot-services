@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/webhook")
+@RequestMapping("/fbwebhook")
 public class FbWebhookController {
 
   private Logger logger = Logger.getLogger(this.getClass());
