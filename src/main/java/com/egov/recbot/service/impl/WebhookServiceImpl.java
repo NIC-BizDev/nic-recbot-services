@@ -2,18 +2,22 @@ package com.egov.recbot.service.impl;
 
 import com.egov.recbot.json.request.WebhookRequest;
 import com.egov.recbot.json.request.WebhookRequestResultContext;
-import com.egov.recbot.json.response.RidbResponse;
-import com.egov.recbot.json.response.RidbResponseRecdata;
-import com.egov.recbot.json.response.WebhookResponse;
-import com.egov.recbot.json.response.WebhookResponseContext;
+import com.egov.recbot.json.response.*;
+import com.egov.recbot.service.ImageService;
 import com.egov.recbot.service.RidbService;
 import com.egov.recbot.service.WebhookService;
+
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +29,9 @@ public class WebhookServiceImpl implements WebhookService {
 
   @Autowired
   private RidbService ridbService;
+
+  @Autowired
+  private ImageService imageService;
 
   @Override
   public WebhookResponse processWebhookRequest(WebhookRequest request) {
@@ -40,7 +47,9 @@ public class WebhookServiceImpl implements WebhookService {
       String location = context.getParameters().get("Location");
       String activities = context.getParameters().get("Activities");
       String activityName = context.getParameters().get("Activities.original");
-      RidbResponse ridbResponse = this.ridbService.getRecommendations(location, activities);
+      RidbResponse ridbResponse = this.ridbService.getRecommendations(location,activities);
+
+
 
       if (!(ridbResponse.getRecdata() == null || ridbResponse.getRecdata().isEmpty())) {
         String recLocations = ridbResponse.getRecdata().stream()
@@ -54,6 +63,31 @@ public class WebhookServiceImpl implements WebhookService {
           location,
           recLocations
         );
+
+        JSONObject obj = new JSONObject();
+        obj.put("size", ridbResponse.getRecdata().size());
+        obj.put("activityName", activityName);
+
+        JSONArray recJsonLocations = new JSONArray();
+
+        for(int index=0 ; index< ridbResponse.getRecdata().size(); index++)
+        {
+          JSONObject recObj = new JSONObject();
+          recObj.put("Name", ridbResponse.getRecdata().get(index).getName());
+          recObj.put("Description", ridbResponse.getRecdata().get(index).getDescription());
+          recObj.put("Latitude", ridbResponse.getRecdata().get(index).getLatitude().toString());
+          recObj.put("Longitude", ridbResponse.getRecdata().get(index).getLongitude().toString());
+
+          ImageServiceResponse imageServiceResponse = imageService.getImageFromPOI(ridbResponse.getRecdata().get(index).getName());
+          recObj.put("Image", imageServiceResponse.getPhotosDataList().get(0).getImage_url());
+          recJsonLocations.add(recObj);
+
+        }
+
+        obj.put("Recreation List", recJsonLocations);
+
+        response.setData(obj);
+
         response.setSpeech(speech);
         response.setDisplayText(speech);
       } else {

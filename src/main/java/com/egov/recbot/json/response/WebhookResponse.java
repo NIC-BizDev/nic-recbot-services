@@ -1,6 +1,7 @@
 package com.egov.recbot.json.response;
 
 import com.egov.recbot.json.JsonBase;
+import org.json.simple.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,10 @@ public class WebhookResponse extends JsonBase {
 
   private String speech;
   private String displayText;
-  private Map<String, String> data;
+  //private List<Recommendations> data;
+
+  private JSONObject data ;
+
   private List<WebhookResponseContext> contextOut;
   private String source;
 
@@ -29,11 +33,19 @@ public class WebhookResponse extends JsonBase {
     this.displayText = displayText;
   }
 
-  public Map<String, String> getData() {
-    return this.data;
+  /*public List<Recommendations> getData() {
+    return data;
   }
 
-  public void setData(Map<String, String> data) {
+  public void setData(List<Recommendations> data) {
+    this.data = data;
+  }*/
+
+  public JSONObject getData() {
+    return data;
+  }
+
+  public void setData(JSONObject data) {
     this.data = data;
   }
 
