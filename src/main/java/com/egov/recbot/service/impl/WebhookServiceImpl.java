@@ -1,10 +1,16 @@
 package com.egov.recbot.service.impl;
 
 import com.egov.recbot.json.request.WebhookRequest;
+import com.egov.recbot.json.response.RidbResponse;
+import com.egov.recbot.json.response.RidbResponseRecdata;
 import com.egov.recbot.json.response.WebhookResponse;
 import com.egov.recbot.json.response.WebhookResponseContext;
 import com.egov.recbot.service.RidbService;
 import com.egov.recbot.service.WebhookService;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
@@ -21,14 +27,39 @@ public class WebhookServiceImpl implements WebhookService {
 
   @Override
   public WebhookResponse processWebhookRequest(WebhookRequest request) {
-    this.logger.warn(this.ridbService.getRecommendations("Nashville"));
-    WebhookResponse webhookResponse = new WebhookResponse();
+    WebhookResponse response = new WebhookResponse();
+    String speech = new String();
+    String intent = request.getResult().getMetadata().getIntentName();
 
-    webhookResponse.setSpeech("This is the response from the webhook!");
-    webhookResponse.setDisplayText("This is the display text from the webhook!");
-    webhookResponse.setSource("nic-recbot-service");
+    if (this.canIntentBeHandled(intent)) {
+      String location = request.getResult().getParameters().get("location");
+      RidbResponse ridbResponse = this.ridbService.getRecommendations(location);
 
-    return webhookResponse;
+      if (!(ridbResponse.getRecdata() == null || ridbResponse.getRecdata().isEmpty())) {
+        String recLocations = ridbResponse.getRecdata().stream()
+          .map(RidbResponseRecdata::getName)
+          .collect(Collectors.joining(", "));
+
+        speech = String.format("Here is a list of hiking locations in %s: %s.", location, recLocations);
+        response.setSpeech(speech);
+        response.setDisplayText(speech);
+      } else {
+        speech = String.format("Sorry, we were unable to find any locations in %s.", location);
+        response.setSpeech(speech);
+        response.setDisplayText(speech);
+      }
+    } else {
+      speech = String.format("Sorry, we were unable to understand the request.");
+      response.setSpeech(speech);
+      response.setDisplayText(speech);
+    }
+
+    response.setSource("nic-recbot-service");
+    return response;
+  }
+
+  private Boolean canIntentBeHandled(String intent) {
+    return ("Hiking: location".equals(intent));
   }
 
 }
