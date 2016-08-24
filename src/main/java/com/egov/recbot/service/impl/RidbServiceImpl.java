@@ -32,7 +32,6 @@ public class RidbServiceImpl implements RidbService {
   @Override
   public RidbResponse getRecommendations(String city) {
     GoogleMapsResponse googleMapsResponse = this.googleMapsService.getCoordinates(city);
-    this.logger.warn(googleMapsResponse);
 
     RestTemplate restTemplate = new RestTemplate();
     HttpEntity<?> httpEntity = this.generateHttpEntityForApiRequests(null);
@@ -42,6 +41,7 @@ public class RidbServiceImpl implements RidbService {
       .queryParam("longitude", googleMapsResponse.getResults().get(0).getGeometry().getLocation().get("lng"))
       .queryParam("activity", "14");  //hardcoded for now
     URI uri = builder.build().toUri();
+
     return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, RidbResponse.class).getBody();
   }
 

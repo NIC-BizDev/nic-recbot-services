@@ -2,18 +2,21 @@ package com.egov.recbot.json.response;
 
 import com.egov.recbot.json.JsonBase;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class RidbResponse extends JsonBase {
 
-  private List<RidbResponseRecdata> RECDATA;
+  @JsonProperty("RECDATA")
+  private List<RidbResponseRecdata> recdata;
 
-  public List<RidbResponseRecdata> getRECDATA() {
-    return this.RECDATA;
+  public List<RidbResponseRecdata> getRecdata() {
+    return this.recdata;
   }
 
-  public void setRECDATA(List<RidbResponseRecdata> RECDATA) {
-    this.RECDATA = RECDATA;
+  public void setRecdata(List<RidbResponseRecdata> recdata) {
+    this.recdata = recdata;
   }
 
 }
