@@ -30,7 +30,7 @@ public class RidbServiceImpl implements RidbService {
   private GoogleMapsService googleMapsService;
 
   @Override
-  public RidbResponse getRecommendations(String city) {
+  public RidbResponse getRecommendations(String city, String activities) {
     GoogleMapsResponse googleMapsResponse = this.googleMapsService.getCoordinates(city);
 
     RestTemplate restTemplate = new RestTemplate();
@@ -39,7 +39,7 @@ public class RidbServiceImpl implements RidbService {
       .queryParam("radius", "100")
       .queryParam("latitude", googleMapsResponse.getResults().get(0).getGeometry().getLocation().get("lat"))
       .queryParam("longitude", googleMapsResponse.getResults().get(0).getGeometry().getLocation().get("lng"))
-      .queryParam("activity", "14");  //hardcoded for now
+      .queryParam("activity", activities);
     URI uri = builder.build().toUri();
 
     return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, RidbResponse.class).getBody();

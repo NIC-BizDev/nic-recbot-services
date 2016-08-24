@@ -4,6 +4,6 @@ import com.egov.recbot.json.response.RidbResponse;
 
 public interface RidbService {
 
-  RidbResponse getRecommendations(String city);
+  RidbResponse getRecommendations(String city, String activities);
 
 }

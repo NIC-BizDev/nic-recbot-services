@@ -1,6 +1,7 @@
 package com.egov.recbot.service.impl;
 
 import com.egov.recbot.json.request.WebhookRequest;
+import com.egov.recbot.json.request.WebhookRequestResultContext;
 import com.egov.recbot.json.response.RidbResponse;
 import com.egov.recbot.json.response.RidbResponseRecdata;
 import com.egov.recbot.json.response.WebhookResponse;
@@ -32,16 +33,26 @@ public class WebhookServiceImpl implements WebhookService {
     String action = request.getResult().getAction();
 
     if (this.canActionBeHandled(action)) {
-      String location = request.getResult().getParameters().get("Location");
-      String activities = request.getResult().getParameters().get("Activities");
-      RidbResponse ridbResponse = this.ridbService.getRecommendations(location);
+      WebhookRequestResultContext context = request.getResult().getContexts().stream()
+        .filter(c -> "recareasearchcontext".equals(c.getName()))
+        .findFirst().get();
+      String location = context.getParameters().get("Location");
+      String activities = context.getParameters().get("Activities");
+      String activityName = context.getParameters().get("Activities.original");
+      RidbResponse ridbResponse = this.ridbService.getRecommendations(location, activities);
 
       if (!(ridbResponse.getRecdata() == null || ridbResponse.getRecdata().isEmpty())) {
         String recLocations = ridbResponse.getRecdata().stream()
           .map(RidbResponseRecdata::getName)
           .collect(Collectors.joining(", "));
 
-        speech = String.format("I found %s hiking locations in %s: %s", ridbResponse.getRecdata().size(), location, recLocations);
+        speech = String.format(
+          "I found %s %s locations in %s: %s",
+          ridbResponse.getRecdata().size(),
+          activityName,
+          location,
+          recLocations
+        );
         response.setSpeech(speech);
         response.setDisplayText(speech);
       } else {
