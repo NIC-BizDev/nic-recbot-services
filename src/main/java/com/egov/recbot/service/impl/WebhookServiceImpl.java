@@ -41,7 +41,7 @@ public class WebhookServiceImpl implements WebhookService {
           .map(RidbResponseRecdata::getName)
           .collect(Collectors.joining(", "));
 
-        speech = String.format("Here is a list of hiking locations in %s: %s.", location, recLocations);
+        speech = String.format("I found %s hiking locations in %s: %s", ridbResponse.getRecdata().size(), location, recLocations);
         response.setSpeech(speech);
         response.setDisplayText(speech);
       } else {
