@@ -9,7 +9,7 @@ public class WebhookResponse extends JsonBase {
 
   private String speech;
   private String displayText;
-  private Map<String, String> data;
+  private Map<String, Object> data;
   private List<WebhookResponseContext> contextOut;
   private String source;
 
@@ -29,11 +29,11 @@ public class WebhookResponse extends JsonBase {
     this.displayText = displayText;
   }
 
-  public Map<String, String> getData() {
+  public Map<String, Object> getData() {
     return this.data;
   }
 
-  public void setData(Map<String, String> data) {
+  public void setData(Map<String, Object> data) {
     this.data = data;
   }
 
