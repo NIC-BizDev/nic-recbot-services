@@ -29,10 +29,11 @@ public class WebhookServiceImpl implements WebhookService {
   public WebhookResponse processWebhookRequest(WebhookRequest request) {
     WebhookResponse response = new WebhookResponse();
     String speech = new String();
-    String intent = request.getResult().getMetadata().getIntentName();
+    String action = request.getResult().getAction();
 
-    if (this.canIntentBeHandled(intent)) {
-      String location = request.getResult().getParameters().get("location");
+    if (this.canActionBeHandled(action)) {
+      String location = request.getResult().getParameters().get("Location");
+      String activities = request.getResult().getParameters().get("Activities");
       RidbResponse ridbResponse = this.ridbService.getRecommendations(location);
 
       if (!(ridbResponse.getRecdata() == null || ridbResponse.getRecdata().isEmpty())) {
@@ -44,12 +45,12 @@ public class WebhookServiceImpl implements WebhookService {
         response.setSpeech(speech);
         response.setDisplayText(speech);
       } else {
-        speech = String.format("Sorry, we were unable to find any locations in %s.", location);
+        speech = String.format("Sorry, I was unable to find any locations in %s.", location);
         response.setSpeech(speech);
         response.setDisplayText(speech);
       }
     } else {
-      speech = String.format("Sorry, we were unable to understand the request.");
+      speech = String.format("Sorry, I was unable to understand your request.");
       response.setSpeech(speech);
       response.setDisplayText(speech);
     }
@@ -58,8 +59,8 @@ public class WebhookServiceImpl implements WebhookService {
     return response;
   }
 
-  private Boolean canIntentBeHandled(String intent) {
-    return ("Hiking: location".equals(intent));
+  private Boolean canActionBeHandled(String action) {
+    return ("RecAreaSearch".equals(action));
   }
 
 }
