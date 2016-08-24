@@ -28,6 +28,7 @@ public class WebhookServiceImpl implements WebhookService {
 
   @Override
   public WebhookResponse processWebhookRequest(WebhookRequest request) {
+    this.logger.warn(request);
     WebhookResponse response = new WebhookResponse();
     String speech = new String();
     String action = request.getResult().getAction();
