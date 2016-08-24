@@ -40,16 +40,12 @@ public class WebhookResponse extends JsonBase {
     this.data = data;
   }*/
 
+
   public JSONObject getData() {
     return data;
   }
 
   public void setData(JSONObject data) {
-  public Map<String, Object> getData() {
-    return this.data;
-  }
-
-  public void setData(Map<String, Object> data) {
     this.data = data;
   }
 
