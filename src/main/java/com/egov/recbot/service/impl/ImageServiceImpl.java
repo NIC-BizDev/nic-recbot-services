@@ -33,7 +33,7 @@ public class ImageServiceImpl  implements ImageService {
     public ImageServiceResponse getImageFromPOI(String pointOfIntrest) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<?> httpEntity = this.generateHttpEntityForApiRequests(null);
-        String params = "term="+pointOfIntrest+"&image_size=1&sort=undefined&only=Landscapes&_method=get&sdk_key=&rpp=1";
+        String params = "term="+pointOfIntrest+"&image_size=1&sort=undefined&only=Landscapes&_method=get&sdk_key=14a189d76dde321cdf2b939c124062709ff1dbd2&rpp=1";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(this.endpoint)
                 .query(params);
         URI uri = builder.build().toUri();
@@ -44,7 +44,7 @@ public class ImageServiceImpl  implements ImageService {
     public ImageServiceResponse getImageFromLocation(Double latitude, Double longitude) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<?> httpEntity = this.generateHttpEntityForApiRequests(null);
-        String params = "geo="+latitude.toString()+","+longitude.toString()+",km&image_size=3&sort=undefined&only=Landscapes&_method=get&sdk_key=&rpp=1";
+        String params = "geo="+latitude.toString()+","+longitude.toString()+",km&image_size=3&sort=undefined&only=Landscapes&_method=get&sdk_key=14a189d76dde321cdf2b939c124062709ff1dbd2&rpp=1";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(this.endpoint)
                 .query(params);
         URI uri = builder.build().toUri();

@@ -7,7 +7,6 @@ import com.egov.recbot.service.ImageService;
 import com.egov.recbot.service.RidbService;
 import com.egov.recbot.service.WebhookService;
 
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -16,8 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,8 +46,6 @@ public class WebhookServiceImpl implements WebhookService {
       String activityName = context.getParameters().get("Activities.original");
       RidbResponse ridbResponse = this.ridbService.getRecommendations(location,activities);
 
-
-
       if (!(ridbResponse.getRecdata() == null || ridbResponse.getRecdata().isEmpty())) {
         String recLocations = ridbResponse.getRecdata().stream()
           .map(RidbResponseRecdata::getName)
@@ -64,7 +59,7 @@ public class WebhookServiceImpl implements WebhookService {
           recLocations
         );
 
-        JSONObject obj = new JSONObject();
+        /*JSONObject obj = new JSONObject();
         obj.put("size", ridbResponse.getRecdata().size());
         obj.put("activityName", activityName);
 
@@ -86,7 +81,7 @@ public class WebhookServiceImpl implements WebhookService {
 
         obj.put("Recreation List", recJsonLocations);
 
-        response.setData(obj);
+        response.setData(obj);*/
 
         response.setSpeech(speech);
         response.setDisplayText(speech);
