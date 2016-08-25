@@ -68,16 +68,24 @@ public class WebhookServiceImpl implements WebhookService {
         for(int index=0 ; index< ridbResponse.getRecdata().size(); index++)
         {
           JSONObject recObj = new JSONObject();
-          recObj.put("Name", ridbResponse.getRecdata().get(index).getName());
+          String poi = ridbResponse.getRecdata().get(index).getName();
+          recObj.put("Name", poi);
           recObj.put("Description", ridbResponse.getRecdata().get(index).getDescription());
           recObj.put("Latitude", ridbResponse.getRecdata().get(index).getLatitude().toString());
           recObj.put("Longitude", ridbResponse.getRecdata().get(index).getLongitude().toString());
 
-          ImageServiceResponse imageServiceResponse = imageService.getImageFromPOI("");
+          ImageServiceResponse imageServiceResponse = imageService.getImageFromPOI(poi);
           this.logger.warn("Image service is "+imageServiceResponse.getPhotosDataList().size());
-          System.out.print("Size is "+imageServiceResponse.getPhotosDataList().size());
-          recObj.put("Image", imageServiceResponse.getPhotosDataList().get(0).getImage_url());
-          System.out.print("URL is "+imageServiceResponse.getPhotosDataList().get(0).getImage_url());
+          this.logger.debug("Size is " + imageServiceResponse.getPhotosDataList().size());
+          if(imageServiceResponse.getPhotosDataList().size() > 0) {
+            recObj.put("Image", imageServiceResponse.getPhotosDataList().get(0).getImage_url());
+            this.logger.debug("URL is " + imageServiceResponse.getPhotosDataList().get(0).getImage_url());
+          }
+          else
+          {
+            //Display default image
+            recObj.put("Image", "https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjA96Wz3tvOAhVIpR4KHbprC8QQjRwIBw&url=http%3A%2F%2Fwww.jbsem.com%2Fsocial-media-for-parks-recreation-back-to-the-basics&bvm=bv.130731782,d.cGc&psig=AFQjCNHrsk_P34WpqqqJkHoom6qz3nT26Q&ust=1472186002743347");
+          }
           recJsonLocations.add(recObj);
 
         }
