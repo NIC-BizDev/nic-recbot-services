@@ -9,6 +9,7 @@ import com.egov.recbot.service.WebhookService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -87,7 +88,10 @@ public class WebhookServiceImpl implements WebhookService {
 
           FbGenericTemplateUrlButton fbDirectionsButton = new FbGenericTemplateUrlButton();
           fbDirectionsButton.setTitle("Get Directions");
-          fbDirectionsButton.setUrl("www.google.com");
+          fbDirectionsButton.setUrl(
+                  MessageFormat.format("https://maps.google.com?saddr=Current+Location&daddr={0},{1}",
+                          ridbResponse.getRecdata().get(index).getLatitude().toString(),
+                          ridbResponse.getRecdata().get(index).getLongitude().toString()));
           fbButtons.add(fbDirectionsButton);
 
 
