@@ -108,8 +108,11 @@ public class WebhookServiceImpl implements WebhookService {
 
           recJsonLocations.add(recObj);
 
-          fbElement.setButtons(fbButtons);
-          fbElements.add(fbElement);
+          if(index < 10) //FB has a 10 item limit
+          {
+            fbElement.setButtons(fbButtons);
+            fbElements.add(fbElement);
+          }
 
         }
 

@@ -15,9 +15,12 @@ public enum attachmentType
 
 public class FbMessageRequestMessageAttachment_GenericTemplate extends JsonBase {
 
-  private String type = "template";
-  private String getType() {return this.type;}
+  public FbMessageRequestMessageAttachment_GenericTemplate()
+  {
+    this.setType("template");
+  }
 
+  private String type;
   private FbGenericTemplate payload;
 
   public FbGenericTemplate getPayload() {
@@ -25,5 +28,12 @@ public class FbMessageRequestMessageAttachment_GenericTemplate extends JsonBase 
   }
   public void setPayload(FbGenericTemplate payload) {
     this.payload = payload;
+  }
+
+  public String getType() {
+    return type;
+  }
+  public void setType(String type) {
+    this.type = type;
   }
 }
