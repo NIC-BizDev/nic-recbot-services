@@ -93,6 +93,7 @@ public class WebhookServiceImpl implements WebhookService {
                           ridbResponse.getRecdata().get(index).getLatitude().toString(),
                           ridbResponse.getRecdata().get(index).getLongitude().toString()));
           fbButtons.add(fbDirectionsButton);
+          recObj.put("DirectionsUrl", fbDirectionsButton.getUrl());
 
 
 

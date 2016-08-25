@@ -36,7 +36,7 @@ public class RidbServiceImpl implements RidbService {
     RestTemplate restTemplate = new RestTemplate();
     HttpEntity<?> httpEntity = this.generateHttpEntityForApiRequests(null);
     UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(this.ridbApiUrl)
-      .queryParam("radius", "100")
+      .queryParam("radius", "50")
       .queryParam("latitude", googleMapsResponse.getResults().get(0).getGeometry().getLocation().get("lat"))
       .queryParam("longitude", googleMapsResponse.getResults().get(0).getGeometry().getLocation().get("lng"))
       .queryParam("activity", activities);
