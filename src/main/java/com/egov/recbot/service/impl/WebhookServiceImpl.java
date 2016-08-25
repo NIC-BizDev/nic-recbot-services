@@ -84,7 +84,7 @@ public class WebhookServiceImpl implements WebhookService {
           else
           {
             //Display default image
-            recObj.put("Image", "https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjA96Wz3tvOAhVIpR4KHbprC8QQjRwIBw&url=http%3A%2F%2Fwww.jbsem.com%2Fsocial-media-for-parks-recreation-back-to-the-basics&bvm=bv.130731782,d.cGc&psig=AFQjCNHrsk_P34WpqqqJkHoom6qz3nT26Q&ust=1472186002743347");
+            recObj.put("Image", "https://drscdn.500px.org/photo/117018577/w%3D70_h%3D70/34a44931e6bc70ca1b6a3de00cd62fdc?v=1");
           }
           recJsonLocations.add(recObj);
 
